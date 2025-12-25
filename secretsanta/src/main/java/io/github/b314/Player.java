@@ -5,7 +5,9 @@
 
 package io.github.b314;
 
-class Player {
+import java.util.ArrayList;
+
+public class Player {
     /**
      * Player that this Player is assigned to
      */
@@ -14,6 +16,23 @@ class Player {
      * Name of this Player
      */
     private String name;
+    /**
+     * Gift ideas for the Player
+     */
+    private ArrayList<String> gifts; 
+
+    /**
+     * Sets the name of the Player and assigned to null
+     * @param name name of the player
+     */
+    public Player (String name) {
+        assigned = null;
+        if(name == null || "".equals(name)) {
+            throw new IllegalArgumentException("Invalid name"); 
+        }
+        this.name = name;
+        gifts = new ArrayList<>(); 
+    }
 
     /**
      * Gets the Player this player is assigned to
@@ -37,10 +56,26 @@ class Player {
     }
 
     /**
-     * Sets the name of this Player
+     * Adds gift ideas for the Player
+     * @param gift gift idea for the Player
      */
-    public void setName(String name) {
-        this.name = name;
+    public void addGift(String gift) {
+        if(gift == null || "".equals(gift)) {
+            throw new IllegalArgumentException("Invalid gift"); 
+        }
+        gifts.add(gift); 
     }
-    
+
+    /**
+     * Represents a Player object with name and gift ideas
+     * @return String representation of the Player
+     */
+    @Override
+    public String toString() {
+        String giftsString = ""; 
+        for(String g : gifts) {
+            giftsString += g + ", "; 
+        }
+        return name + ": " + giftsString; 
+    }
 }

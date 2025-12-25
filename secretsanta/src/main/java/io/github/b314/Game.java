@@ -12,8 +12,19 @@ public class Game {
      * List of participants
      */
     private ArrayList<Player> players; 
+    /**
+     * Current player
+     */
+    private Player current; 
 
+    /**
+     * Creates a Game with a name and empty list of Players
+     * @param name name of the Game
+     */
     public Game(String name) {
+        if(name == null || "".equals(name)) {
+            throw new IllegalArgumentException("Invalid name"); 
+        }
         this.name = name;
         players = new ArrayList<>();
     }
@@ -22,8 +33,28 @@ public class Game {
         return name;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    /**
+     * Adds a new Player to the game
+     * @param name name of the Game
+     */
+    public void addPlayer(String name) {
+        players.add(new Player(name)); 
+        current = players.getLast(); 
+    }
+
+    /**
+     * Changes the current Player based on selection
+     * @param player new current player
+     */
+    public void selectCurrent(Player player) {
+        current = player; 
+    }
+
+    /**
+     * Adds a gift idea for the current player
+     */
+    public void addGift(String gift) {
+        current.addGift(gift); 
     }
 
     public void assignPlayer() {
