@@ -1,13 +1,24 @@
 package io.github.b314;
 
-import com.fasterxml.jackson.databind.JsonNode; 
-import com.fasterxml.jackson.databind.ObjectMapper; 
 import java.io.File; 
-import java.io.IOException; 
+import java.io.IOException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper; 
 
 public class GameReader {
-    public Game gameReader(String fileName) throws IOException {
+    public static Game gameReader(File gameFile) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper(); 
-        JsonNode jsonNode = objectMapper.readTree(new File(fileName)); 
+        JsonNode gameRoot = objectMapper.readTree(gameFile); 
+        Game game = new Game(gameRoot.path("title").asText());
+        JsonNode playersRoot = gameRoot.path("players");
+        for(JsonNode playerNode : playersRoot) {
+            game.addPlayer(playerNode.path("name").asText()); 
+            JsonNode giftsNode = playerNode.path("gifts"); 
+            for(JsonNode gift : giftsNode) {
+                game.addGift(gift.asText()); 
+            } 
+        }
+        return game;
     }
 }

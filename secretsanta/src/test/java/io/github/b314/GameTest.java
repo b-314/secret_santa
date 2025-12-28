@@ -10,6 +10,6 @@ public class GameTest {
     @Test
     public void testGame() {
         Game g = new Game("Secret Santa"); 
-        assertEquals("Secret Santa", g.getName());
+        assertEquals("Secret Santa", g.getTitle());
     }
 }

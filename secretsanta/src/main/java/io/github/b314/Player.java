@@ -24,6 +24,7 @@ public class Player {
     /**
      * Sets the name of the Player and assigned to null
      * @param name name of the player
+     * @throws IllegalArgumentException if string is empty or null
      */
     public Player (String name) {
         assigned = null;
@@ -58,6 +59,7 @@ public class Player {
     /**
      * Adds gift ideas for the Player
      * @param gift gift idea for the Player
+     * @throws IllegalArgumentException if string is empty or null
      */
     public void addGift(String gift) {
         if(gift == null || "".equals(gift)) {
@@ -76,6 +78,6 @@ public class Player {
         for(String g : gifts) {
             giftsString += g + ", "; 
         }
-        return name + ": " + giftsString; 
+        return name + "\t Gift list: " + giftsString; 
     }
 }

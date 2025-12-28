@@ -7,7 +7,7 @@ public class Game {
     /**
      * Name of the Game
      */
-    private String name; 
+    private String title; 
     /**
      * List of participants
      */
@@ -20,17 +20,18 @@ public class Game {
     /**
      * Creates a Game with a name and empty list of Players
      * @param name name of the Game
+     * @throws IllegalArgumentException if string is empty or null
      */
-    public Game(String name) {
-        if(name == null || "".equals(name)) {
+    public Game(String title) {
+        if(title == null || "".equals(title)) {
             throw new IllegalArgumentException("Invalid name"); 
         }
-        this.name = name;
+        this.title = title;
         players = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     /**
@@ -38,8 +39,9 @@ public class Game {
      * @param name name of the Game
      */
     public void addPlayer(String name) {
-        players.add(new Player(name)); 
-        current = players.getLast(); 
+        Player p = new Player(name); 
+        players.add(p); 
+        current = p; 
     }
 
     /**
