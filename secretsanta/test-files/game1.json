@@ -1,0 +1,25 @@
+{
+    "title": "Secret Santa 2012", 
+    "players": [
+        {
+            "name": "Steve", 
+            "gifts": ["Baseball caps", "Dumbells"]
+        }, 
+        {
+            "name": "Tony", 
+            "gifts": ["Rasberry Pi", "Keyboard", "Cables"]
+        }, 
+        {
+            "name": "", 
+            "gifts": ["Fidget toys", "Scented candles"]
+        }, 
+        {
+            "name": "Natasha", 
+            "gifts": []
+        }, 
+        {
+            "name": "Thor", 
+            "gifts": ["Hammer"]
+        }
+    ]
+}

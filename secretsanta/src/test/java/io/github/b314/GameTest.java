@@ -11,5 +11,6 @@ public class GameTest {
     public void testGame() {
         Game g = new Game("Secret Santa"); 
         assertEquals("Secret Santa", g.getTitle());
+        assertEquals(0, g.getPlayers().size()); 
     }
 }

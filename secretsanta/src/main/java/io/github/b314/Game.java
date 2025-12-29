@@ -30,8 +30,20 @@ public class Game {
         players = new ArrayList<>();
     }
 
+    /**
+     * Gets the Title of the Game
+     * @return game title
+     */
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Gets the current list of Players
+     * @return ArrayList of Players
+     */
+    public ArrayList<Player> getPlayers() {
+        return players; 
     }
 
     /**
@@ -54,11 +66,15 @@ public class Game {
 
     /**
      * Adds a gift idea for the current player
+     * @param gift idea for a gift
      */
     public void addGift(String gift) {
         current.addGift(gift); 
     }
 
+    /**
+     * Assigns Players another player randomly such that no player is assigned themselves
+     */
     public void assignPlayer() {
         Player[] assignments = new Player[players.size()];
         Random random = new Random(); 
