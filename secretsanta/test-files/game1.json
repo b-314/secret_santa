@@ -20,6 +20,10 @@
         {
             "name": "Thor", 
             "gifts": ["Hammer"]
+        }, 
+        {
+            "name": "Steve", 
+            "gifts": ["Vinyl records"]
         }
     ]
 }

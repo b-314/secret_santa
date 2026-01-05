@@ -3,7 +3,7 @@ package io.github.b314;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game {
+public class GiftGame {
     /**
      * Name of the Game
      */
@@ -22,7 +22,7 @@ public class Game {
      * @param name name of the Game
      * @throws IllegalArgumentException if string is empty or null
      */
-    public Game(String title) {
+    public GiftGame(String title) {
         if(title == null || "".equals(title)) {
             throw new IllegalArgumentException("Invalid name"); 
         }
@@ -49,8 +49,14 @@ public class Game {
     /**
      * Adds a new Player to the game
      * @param name name of the Game
+     * @throws IllegalArgumentException if the added player has a non-unique name
      */
     public void addPlayer(String name) {
+        for(Player p : players) {
+            if(p.getName().equals(name)) {
+                throw new IllegalArgumentException("Players cannot have identical names"); 
+            }
+        }
         Player p = new Player(name); 
         players.add(p); 
         current = p; 
@@ -75,7 +81,7 @@ public class Game {
     /**
      * Assigns Players another player randomly such that no player is assigned themselves
      */
-    public void assignPlayer() {
+    public void assignPlayers() {
         Player[] assignments = new Player[players.size()];
         Random random = new Random(); 
         for(int i = assignments.length; i > 1; i--) {

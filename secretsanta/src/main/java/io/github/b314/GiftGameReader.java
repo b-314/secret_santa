@@ -6,11 +6,11 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 
-public class GameReader {
-    public static Game gameReader(File gameFile) throws IOException {
+public class GiftGameReader {
+    public static GiftGame gameReader(File gameFile) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper(); 
         JsonNode gameRoot = objectMapper.readTree(gameFile); 
-        Game game = new Game(getText(gameRoot, "title"));
+        GiftGame game = new GiftGame(getText(gameRoot, "title"));
         JsonNode playersRoot = gameRoot.path("players");
         for(JsonNode playerNode : playersRoot) {
             try {

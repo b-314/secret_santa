@@ -11,7 +11,7 @@ public class GameReaderTest {
 
     @Test
     public void testGameReader() {
-        Game g = assertDoesNotThrow(() -> GameReader.gameReader(FILE1));  
-        assertEquals("Secret Santa 2012", g.getTitle()); 
+        GiftGame gg = assertDoesNotThrow(() -> GiftGameReader.gameReader(FILE1));  
+        assertEquals("Secret Santa 2012", gg.getTitle()); 
     }
 }
