@@ -1,2 +1,4 @@
-io\github\b314\Game.class
+io\github\b314\GiftGame.class
+io\github\b314\GiftGameReader.class
 io\github\b314\Player.class
+io\github\b314\GiftGameUI.class

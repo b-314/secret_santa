@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="io.github.b314.GameReaderTest" time="0.148" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="io.github.b314.GiftGameTest" time="0.035" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,9 +15,9 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\belag\AppData\Local\Temp\surefire14097013346135473357\surefirebooter6137995384727672747.jar C:\Users\belag\AppData\Local\Temp\surefire14097013346135473357 2026-02-08T03-18-08_711-jvmRun1 surefire3029221466559082459tmp surefire_02583086083193841322tmp"/>
+    <property name="sun.java.command" value="C:\Users\belag\AppData\Local\Temp\surefire12868569273021818487\surefirebooter96738829662339806.jar C:\Users\belag\AppData\Local\Temp\surefire12868569273021818487 2026-02-08T03-14-29_192-jvmRun1 surefire10578199168012656060tmp surefire_014869646280513210013tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="io.github.b314.GameReaderTest#testGameReader"/>
+    <property name="test" value="io.github.b314.GiftGameTest"/>
     <property name="surefire.test.class.path" value="C:\Users\belag\Desktop\code\SecretSanta\secretsanta\target\test-classes;C:\Users\belag\Desktop\code\SecretSanta\secretsanta\target\classes;C:\Users\belag\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.1\junit-jupiter-5.10.1.jar;C:\Users\belag\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;C:\Users\belag\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\belag\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;C:\Users\belag\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\belag\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.1\junit-jupiter-params-5.10.1.jar;C:\Users\belag\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;C:\Users\belag\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;C:\Users\belag\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.16.1\jackson-databind-2.16.1.jar;C:\Users\belag\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.16.1\jackson-annotations-2.16.1.jar;C:\Users\belag\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.16.1\jackson-core-2.16.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\belag"/>
@@ -31,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\belag\AppData\Local\Temp\surefire14097013346135473357\surefirebooter6137995384727672747.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\belag\AppData\Local\Temp\surefire12868569273021818487\surefirebooter96738829662339806.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.8+12-LTS-250"/>
@@ -60,5 +60,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testGameReader" classname="io.github.b314.GameReaderTest" time="0.135"/>
+  <testcase name="testGiftGame" classname="io.github.b314.GiftGameTest" time="0.019"/>
 </testsuite>

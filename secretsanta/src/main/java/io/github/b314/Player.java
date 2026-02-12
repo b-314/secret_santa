@@ -78,6 +78,7 @@ public class Player {
         for(String g : gifts) {
             giftsString += g + ", "; 
         }
-        return name + "\t Gift list: " + giftsString; 
+        giftsString = giftsString.substring(0, giftsString.length() - 2);
+        return name + ", Gift List: " + giftsString; 
     }
 }
