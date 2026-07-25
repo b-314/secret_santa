@@ -15,11 +15,11 @@ public class GameReaderTest {
         GiftGame gg = assertDoesNotThrow(() -> GiftGameReader.gameReader(FILE1));  
         assertEquals("Secret Santa 2012", gg.getTitle()); 
         ArrayList<Player> players = gg.getPlayers(); 
-        assertEquals("Steve", players.get(0).getName()); 
+        String[] names = {"Steve", "Tony", "Bruce", "Thor"}; 
+        for(int i = 0; i < names.length; i++) {
+            assertEquals(names[i], players.get(i).getName()); 
+        }
         assertEquals("Steve, Gift List: Baseball caps, Dumbells", players.get(0).toString()); 
-        assertEquals("Tony", players.get(1).getName()); 
-        assertEquals("Bruce", players.get(2).getName()); 
-        assertEquals("Thor", players.get(3).getName()); 
         assertEquals(4, players.size()); 
     }
 }

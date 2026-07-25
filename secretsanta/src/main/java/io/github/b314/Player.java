@@ -69,6 +69,14 @@ public class Player {
     }
 
     /**
+     * Returns the list of gift ideas for the Player
+     * @return gifts the list of gift ideas
+     */
+    public ArrayList<String> getGifts() {
+        return gifts; 
+    }
+
+    /**
      * Represents a Player object with name and gift ideas
      * @return String representation of the Player
      */

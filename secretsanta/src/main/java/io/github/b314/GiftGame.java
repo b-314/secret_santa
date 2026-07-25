@@ -38,6 +38,14 @@ public class GiftGame {
         return title;
     }
 
+    /** 
+     * Sets the Title of the Game
+     * @param game title
+     */
+    public void setTitle(String title) {
+        this.title = title; 
+    }
+
     /**
      * Gets the current list of Players
      * @return ArrayList of Players
@@ -49,9 +57,10 @@ public class GiftGame {
     /**
      * Adds a new Player to the game
      * @param name name of the Game
+     * @return a new player with the given name
      * @throws IllegalArgumentException if the added player has a non-unique name
      */
-    public void addPlayer(String name) {
+    public Player addPlayer(String name) {
         for(Player p : players) {
             if(p.getName().equals(name)) {
                 throw new IllegalArgumentException("Players cannot have identical names"); 
@@ -60,6 +69,15 @@ public class GiftGame {
         Player p = new Player(name); 
         players.add(p); 
         current = p; 
+        return p; 
+    }
+
+    /**
+     * Removes the given player from the player list
+     * @param p the player to remove
+     */
+    public void removePlayer(Player p) {
+        players.remove(players.indexOf(p)); 
     }
 
     /**
