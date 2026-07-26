@@ -77,16 +77,31 @@ public class Player {
     }
 
     /**
+     * Clears the list of gifts for the Player
+     */
+    public void clearGifts() {
+        gifts.clear(); 
+    }
+
+    /**
+     * Returns a String of gift ideas for the Player
+     * @return gifts the String of gift ideas
+     */
+    public String getGiftsString() {
+        String giftsString = ""; 
+        for(int i = 0; i < gifts.size() - 1; i++) {
+            giftsString += gifts.get(i) + "\n "; 
+        }
+        giftsString += gifts.getLast(); 
+        return giftsString; 
+    }
+
+    /**
      * Represents a Player object with name and gift ideas
      * @return String representation of the Player
      */
     @Override
     public String toString() {
-        String giftsString = ""; 
-        for(String g : gifts) {
-            giftsString += g + ", "; 
-        }
-        giftsString = giftsString.substring(0, giftsString.length() - 2);
-        return name + ", Gift List: " + giftsString; 
+        return name + getGiftsString();  
     }
 }

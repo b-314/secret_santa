@@ -1,10 +1,13 @@
 package io.github.b314;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
 
@@ -39,6 +42,9 @@ public class GiftGameUI {
     private JLabel gameTitleLabel;
     private DefaultListModel<String> playerListModel;
     private JList<String> playerList;
+    private DefaultListModel<String> giftListModel;
+    private JList<String> giftList;
+    private JScrollPane giftScrollPane;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GiftGameUI::new);
@@ -52,71 +58,146 @@ public class GiftGameUI {
 
         createComponents();
         frame.setVisible(true);
+        
         game = new GiftGame("Secret Santa"); 
     }
 
     private void createComponents() {
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        Dimension buttonSize = new Dimension(160, 30);
 
-        // ---------- TOP ----------
-        JPanel topPanel = new JPanel(new BorderLayout());
+        // =========================================================
+        // LEFT SIDE
+        // =========================================================
+        JPanel leftPanel = new JPanel(new BorderLayout(10, 10));
+
+        // ---------- GAME TITLE ----------
+        JPanel titlePanel = new JPanel(new BorderLayout());
 
         gameTitleLabel = new JLabel("Secret Santa");
         gameTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
 
-        JButton updateTitleButton = new JButton("Update Game Title");
+        JButton updateTitleButton = new JButton("Update Title");
+        updateTitleButton.setPreferredSize(buttonSize);
+        updateTitleButton.setMinimumSize(buttonSize);
+        updateTitleButton.setMaximumSize(buttonSize);
 
         updateTitleButton.addActionListener(e -> updateGameTitle());
 
-        topPanel.add(gameTitleLabel, BorderLayout.WEST);
-
-        topPanel.add(updateTitleButton, BorderLayout.EAST);
+        titlePanel.add(gameTitleLabel, BorderLayout.WEST);
+        titlePanel.add(updateTitleButton, BorderLayout.EAST);
 
         // ---------- PLAYER LIST ----------
         playerListModel = new DefaultListModel<>();
         playerList = new JList<>(playerListModel);
+
         playerList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane playerScrollPane = new JScrollPane(playerList);
         playerScrollPane.setBorder(BorderFactory.createTitledBorder("Players"));
 
-        // ---------- PLAYER BUTTONS ----------
-        JPanel playerButtonPanel = new JPanel(new FlowLayout());
-        JButton createPlayerButton = new JButton("Create Player");
-        JButton deletePlayerButton = new JButton("Delete Player");
+        // ---------- GIFT LIST ----------
+        giftListModel = new DefaultListModel<>();
+        giftList = new JList<>(giftListModel);
+
+        giftScrollPane = new JScrollPane(giftList);
+        giftScrollPane.setBorder(BorderFactory.createTitledBorder("Gift Ideas"));
+
+        // When a player is selected, update the gift list
+        playerList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                updateSelectedPlayerGifts();
+            }
+        });
+
+        // ---------- LEFT CONTENT ----------
+        JPanel playerAndGiftPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+
+        gbc.gridy = 0;
+        gbc.weighty = 1.2;
+        playerAndGiftPanel.add(playerScrollPane, gbc);
+
+        gbc.gridy = 1;
+        gbc.weighty = 0.8;
+        playerAndGiftPanel.add(giftScrollPane, gbc);
+
+        leftPanel.add(titlePanel, BorderLayout.NORTH);
+        leftPanel.add(playerAndGiftPanel, BorderLayout.CENTER);
+
+        // =========================================================
+        // RIGHT SIDE
+        // =========================================================
+        JPanel rightPanel = new JPanel(
+                new GridLayout(3, 1)
+        );
+
+        // ---------- PLAYER LIST ----------
+        JPanel playerButtonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+
+        JButton createPlayerButton = new JButton("Add Player");
+        JButton deletePlayerButton = new JButton("Remove Player");
+        JButton updateGiftsButton = new JButton("Update Gift List");
+
+        createPlayerButton.setPreferredSize(buttonSize);
+        deletePlayerButton.setPreferredSize(buttonSize);
+        updateGiftsButton.setPreferredSize(buttonSize);
 
         createPlayerButton.addActionListener(e -> createPlayer());
         deletePlayerButton.addActionListener(e -> deletePlayer());
-        
+        updateGiftsButton.addActionListener(e -> updatePlayerGifts());
+
         playerButtonPanel.add(createPlayerButton);
         playerButtonPanel.add(deletePlayerButton);
+        playerButtonPanel.add(updateGiftsButton);
 
-        // ---------- GAME BUTTONS ----------
-        JPanel gameButtonPanel = new JPanel(new FlowLayout());
+        // ---------- ASSIGNMENTS ----------
+        JPanel assignmentButtonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
 
-        JButton importButton = new JButton("Import Players");
         JButton assignButton = new JButton("Assign Players");
         JButton viewAssignmentButton = new JButton("View Assignment");
-        JButton exportButton = new JButton("Export Assignments");
 
-        importButton.addActionListener(e -> importPlayers());
+        assignButton.setPreferredSize(buttonSize);
+        viewAssignmentButton.setPreferredSize(buttonSize);
+
         assignButton.addActionListener(e -> assignPlayers(assignButton));
         viewAssignmentButton.addActionListener(e -> viewAssignment());
+
+        assignmentButtonPanel.add(assignButton);
+        assignmentButtonPanel.add(viewAssignmentButton);
+
+        // ---------- FILE I/O ----------
+        JPanel importExportButtonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+
+        JButton importButton = new JButton("Import Players");
+        JButton exportButton = new JButton("Export Assignments");
+
+        importButton.setPreferredSize(buttonSize);
+        exportButton.setPreferredSize(buttonSize);
+
+        importButton.addActionListener(e -> importPlayers());
         exportButton.addActionListener(e -> exportAssignments());
 
-        gameButtonPanel.add(importButton);
-        gameButtonPanel.add(assignButton);
-        gameButtonPanel.add(viewAssignmentButton);
-        gameButtonPanel.add(exportButton);
+        importExportButtonPanel.add(importButton);
+        importExportButtonPanel.add(exportButton);
 
-        // ---------- BOTTOM ----------
-        JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.add(playerButtonPanel, BorderLayout.NORTH);
-        bottomPanel.add(gameButtonPanel, BorderLayout.SOUTH);
+        playerButtonPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        assignmentButtonPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.GRAY));
+        importExportButtonPanel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY));
 
-        // ---------- ADD EVERYTHING ----------
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(playerScrollPane, BorderLayout.CENTER);
-        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        // =========================================================
+        // ADD PANELS
+        // =========================================================
+        rightPanel.add(playerButtonPanel);
+        rightPanel.add(assignmentButtonPanel);
+        rightPanel.add(importExportButtonPanel);
+
+        mainPanel.add(leftPanel);
+        mainPanel.add(rightPanel);
 
         frame.setContentPane(mainPanel);
     }
@@ -195,16 +276,36 @@ public class GiftGameUI {
     }
 
     private void updatePlayerList() {
-        playerListModel.clear(); 
-        if(game == null) {
-            return;
-        }
+        Player selectedPlayer = getSelectedPlayer();
 
+        playerListModel.clear(); 
         for(Player player : game.getPlayers()) {
             playerListModel.addElement(player.getName()); 
         }
+
+        if (selectedPlayer != null) {
+            int index = game.getPlayers().indexOf(selectedPlayer);
+            if (index >= 0) {
+                playerList.setSelectedIndex(index);
+            }
+        }
+        updateSelectedPlayerGifts();
     }
 
+    private void updateSelectedPlayerGifts() {
+        giftListModel.clear();
+        Player selectedPlayer = getSelectedPlayer();
+        if (selectedPlayer == null) {
+            giftScrollPane.setBorder(BorderFactory.createTitledBorder("Gift Ideas"));
+            return;
+        }
+
+        giftScrollPane.setBorder(BorderFactory.createTitledBorder(selectedPlayer.getName() + "'s Gift Ideas"));
+        for (String gift : selectedPlayer.getGifts()) {
+            giftListModel.addElement(gift);
+        }
+    }
+    
     private void createPlayer() {
         String name = JOptionPane.showInputDialog(frame, "Enter player name:");
         if (name == null || name.trim().isEmpty()) {
@@ -237,10 +338,39 @@ public class GiftGameUI {
         }
 
         updatePlayerList();
-        JOptionPane.showMessageDialog(
-                frame,
-                "Player created successfully!"
-        );
+        int newPlayerIndex = game.getPlayers().indexOf(player);
+        if (newPlayerIndex >= 0) {
+            playerList.setSelectedIndex(newPlayerIndex);
+            playerList.ensureIndexIsVisible(newPlayerIndex);
+        }
+        
+        JOptionPane.showMessageDialog(frame, "Player created successfully!");
+    }
+
+    private void updatePlayerGifts() {
+        Player selectedPlayer = getSelectedPlayer();
+        if(selectedPlayer == null) {
+            JOptionPane.showMessageDialog(frame, "Please select a player first."); 
+            return; 
+        }
+
+        String gifts = JOptionPane.showInputDialog(frame, "Enter gift ideas separated by commas:", selectedPlayer.getGiftsString());
+        if (gifts == null) {
+            return;
+        }
+
+        selectedPlayer.clearGifts();
+        String[] giftArray = gifts.split(",");
+
+        for (String gift : giftArray) {
+            gift = gift.trim();
+            if (!gift.isEmpty()) {
+                selectedPlayer.addGift(gift);
+            }
+        }
+
+        updateSelectedPlayerGifts();
+        JOptionPane.showMessageDialog(frame, "Gift ideas updated successfully!");
     }
 
     public void deletePlayer() {
@@ -295,7 +425,6 @@ public class GiftGameUI {
             JOptionPane.showMessageDialog(frame, "Please select a player.");
             return;
         }
-
         if (assignmentsCreated) {
             JOptionPane.showMessageDialog(frame, "Please assign players before viewing assignments.");
             return;
@@ -355,12 +484,12 @@ public class GiftGameUI {
             giftModel.addElement("• " + gift);
         }
 
-        JList<String> giftList = new JList<>(giftModel);
+        giftList = new JList<>(giftModel);
 
         giftList.setFont(new Font("SansSerif", Font.PLAIN, 16));
         giftList.setVisibleRowCount(4);
 
-        JScrollPane giftScrollPane = new JScrollPane(giftList);
+        giftScrollPane = new JScrollPane(giftList);
         giftScrollPane.setPreferredSize(new Dimension(300, 100));
         assignmentPanel.add(giftScrollPane);
 
