@@ -1,6 +1,7 @@
 package io.github.b314;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class GiftGame {
@@ -100,18 +101,28 @@ public class GiftGame {
      * Assigns Players another player randomly such that no player is assigned themselves
      */
     public void assignPlayers() {
-        Player[] assignments = new Player[players.size()];
-        Random random = new Random(); 
-        for(int i = assignments.length; i > 1; i--) {
-            int j = random.nextInt(i-1); 
-            Player temp = assignments[j]; 
-            assignments[j] = assignments[i]; 
-            assignments[i] = temp; 
+        if (players.size() < 2) {
+            throw new IllegalStateException("At least two players are required to make assignments.");
         }
 
-        int playerNum = 0; 
-        for(Player p : players) {
-            p.setAssigned(assignments[playerNum]);
+        ArrayList<Player> assignments = new ArrayList<>(players);
+        Random random = new Random();
+        boolean validAssignment = false;
+
+        while (!validAssignment) {
+            Collections.shuffle(assignments, random);
+            validAssignment = true;
+
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i) == assignments.get(i)) {
+                    validAssignment = false;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setAssigned(assignments.get(i));
         }
     }
 }

@@ -138,8 +138,8 @@ public class GiftGameUI {
         // ---------- PLAYER LIST ----------
         JPanel playerButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        JButton createPlayerButton = new JButton("Add Player");
-        JButton deletePlayerButton = new JButton("Remove Player");
+        JButton createPlayerButton = new JButton("Create Player");
+        JButton deletePlayerButton = new JButton("Delete Player");
         JButton updateGiftsButton = new JButton("Update Gift List");
 
         createPlayerButton.setPreferredSize(buttonSize);
@@ -402,6 +402,7 @@ public class GiftGameUI {
         if(game == null) {
             return;
         }
+
         if(assignmentsCreated) {
             int result = JOptionPane.showConfirmDialog(frame, "Re-assign everyone?", 
                 "Confirm Re-assignment", JOptionPane.YES_NO_OPTION); 
@@ -410,21 +411,25 @@ public class GiftGameUI {
             }
         }
 
-        game.assignPlayers(); 
-        assignmentsCreated = true; 
-        assignButton.setText("Re-assign Players"); 
-
-        JOptionPane.showMessageDialog(frame, "Secret Santa assignments completed!"); 
+        try {
+            game.assignPlayers();
+            assignmentsCreated = true;
+            assignButton.setText("Re-assign Players");
+            JOptionPane.showMessageDialog(frame, "Secret Santa assignments completed!", 
+            "Assignments Complete", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage(), "Could Not Assign Players", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void viewAssignment() {
         Player giver = getSelectedPlayer();
 
-        if (giver == null) {
+        if(giver == null) {
             JOptionPane.showMessageDialog(frame, "Please select a player.");
             return;
         }
-        if (assignmentsCreated) {
+        if(!assignmentsCreated) {
             JOptionPane.showMessageDialog(frame, "Please assign players before viewing assignments.");
             return;
         }
@@ -436,27 +441,14 @@ public class GiftGameUI {
     private void showAssignmentDialog(Player giver, Player giftee) {
         JDialog dialog = new JDialog(frame, "Secret Santa Assignment", true);
 
-        dialog.setSize(500, 450);
+        dialog.setSize(500, 400);
         dialog.setLocationRelativeTo(frame);
         dialog.setLayout(new BorderLayout());
-
-        // ---------- TOP PANEL ----------
-        JPanel topPanel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel("Your Secret Santa Assignment", SwingConstants.CENTER);
-
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-
-        JButton closeButton = new JButton("X");
-        closeButton.setToolTipText("Hide assignment");
-        closeButton.addActionListener(e -> dialog.dispose());
-
-        topPanel.add(titleLabel, BorderLayout.CENTER);
-        topPanel.add(closeButton, BorderLayout.EAST);
 
         // ---------- ASSIGNMENT PANEL ----------
         JPanel assignmentPanel = new JPanel();
         assignmentPanel.setLayout(new BoxLayout(assignmentPanel, BoxLayout.Y_AXIS));
-        JLabel giverLabel = new JLabel(giver.getName() + ", you'll be the secret santa for 🤫...");
+        JLabel giverLabel = new JLabel(giver.getName() + ", you'll be the secret santa for...");
         giverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         giverLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
         
@@ -490,19 +482,21 @@ public class GiftGameUI {
 
         giftScrollPane = new JScrollPane(giftList);
         giftScrollPane.setPreferredSize(new Dimension(300, 100));
+        giftScrollPane.setMaximumSize(new Dimension(300, 100));
+        giftScrollPane.setMinimumSize(new Dimension(300, 100));
+        giftScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         assignmentPanel.add(giftScrollPane);
 
         // ---------- BOTTOM PANEL ----------
-        JLabel timerLabel = new JLabel("This assignment will hide in 30 seconds.", SwingConstants.CENTER);
+        JLabel timerLabel = new JLabel("This assignment will hide in 10 seconds.", SwingConstants.CENTER);
         timerLabel.setFont(new Font("SansSerif", Font.ITALIC, 12));
 
         // ---------- ADD COMPONENTS ----------
-        dialog.add(topPanel, BorderLayout.NORTH);
         dialog.add(assignmentPanel, BorderLayout.CENTER);
         dialog.add(timerLabel, BorderLayout.SOUTH);
 
-        // ---------- 30 SECOND TIMER ----------
-        Timer timer = new Timer(30_000, e -> dialog.dispose());
+        // ---------- 10 SECOND TIMER ----------
+        Timer timer = new Timer(10_000, e -> dialog.dispose());
         timer.setRepeats(false);
         timer.start();
 
