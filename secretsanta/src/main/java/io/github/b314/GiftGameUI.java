@@ -52,6 +52,7 @@ public class GiftGameUI {
 
         createComponents();
         frame.setVisible(true);
+        game = new GiftGame("Secret Santa"); 
     }
 
     private void createComponents() {
@@ -205,23 +206,41 @@ public class GiftGameUI {
     }
 
     private void createPlayer() {
-        String name = JOptionPane.showInputDialog(frame, "Enter player name: "); 
-        if(name == null || name.trim().isEmpty()) {
-            return; 
+        String name = JOptionPane.showInputDialog(frame, "Enter player name:");
+        if (name == null || name.trim().isEmpty()) {
+            return;
         }
+        name = name.trim();
 
-        Player player = game.addPlayer(name); 
-        String gifts = JOptionPane.showInputDialog(frame, "Enter gift ideas separated by commas: "); 
-        if(gifts == null) {
+        Player player;
+        try {
+            player = game.addPlayer(name);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage(), 
+            "Could Not Create Player", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        String[] giftArray = gifts.split(","); 
-        for(String gift : giftArray) {
-            player.addGift(gift.trim());
-        } 
+        String gifts = JOptionPane.showInputDialog(frame, "Enter gift ideas separated by commas:");
+        if (gifts == null) {
+            game.removePlayer(player);
+            return;
+        }
 
-        updatePlayerList(); 
+        // Add each gift
+        String[] giftArray = gifts.split(",");
+        for (String gift : giftArray) {
+            gift = gift.trim();
+            if (!gift.isEmpty()) {
+                player.addGift(gift);
+            }
+        }
+
+        updatePlayerList();
+        JOptionPane.showMessageDialog(
+                frame,
+                "Player created successfully!"
+        );
     }
 
     public void deletePlayer() {
