@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout; 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -132,12 +133,10 @@ public class GiftGameUI {
         // =========================================================
         // RIGHT SIDE
         // =========================================================
-        JPanel rightPanel = new JPanel(
-                new GridLayout(3, 1)
-        );
+        JPanel rightPanel = new JPanel(new GridLayout(3, 1));
 
         // ---------- PLAYER LIST ----------
-        JPanel playerButtonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        JPanel playerButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JButton createPlayerButton = new JButton("Add Player");
         JButton deletePlayerButton = new JButton("Remove Player");
@@ -156,7 +155,7 @@ public class GiftGameUI {
         playerButtonPanel.add(updateGiftsButton);
 
         // ---------- ASSIGNMENTS ----------
-        JPanel assignmentButtonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel assignmentButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JButton assignButton = new JButton("Assign Players");
         JButton viewAssignmentButton = new JButton("View Assignment");
@@ -171,7 +170,7 @@ public class GiftGameUI {
         assignmentButtonPanel.add(viewAssignmentButton);
 
         // ---------- FILE I/O ----------
-        JPanel importExportButtonPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel importExportButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JButton importButton = new JButton("Import Players");
         JButton exportButton = new JButton("Export Assignments");
